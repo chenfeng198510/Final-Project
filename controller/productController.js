@@ -3,9 +3,12 @@ const Product = require('../models/product');
 require('dotenv').config();
 const PUBLISHER_KEY = process.env.PUBLISHER_KEY
 const SECRET_KEY = process.env.SECRET_KEY
-
+const sgMail =require('@sendgrid/mail');
+const { claimCheck } = require('express-openid-connect');
+const sendGridApiKey = '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';
 const stripe = require('stripe')(SECRET_KEY);
 
+//Trigger product_index to go to Index Page
 const product_index = (req, res)=> {
     let isAuthenticated = req.oidc.isAuthenticated();
     if(isAuthenticated) {
@@ -27,6 +30,7 @@ const product_index = (req, res)=> {
     }
   }
 
+  //secured enpoint and get localhost:5000 API SERVER
 const secured_endpoint = async (req, res)=> {
     let data ={}
     const {token_type, access_token} = req.oidc.accessToken;
@@ -49,7 +53,7 @@ const secured_endpoint = async (req, res)=> {
     });
 }
 
-
+//Role based authentication,get token and if role is admin,render to create page.
 const role_based_authentication = async(req,res) => {
     let data = {};
     
@@ -74,7 +78,7 @@ try{
         add: result,
          });
     });
-    // when there is not error, you will be redirected to the secured page with the data you get fromt the api
+ // when there is not error, you will be redirected to the secured page with the data you get fromt the api
 }catch(e) {
     console.log(e);
     res.render('notaccess', {
@@ -84,6 +88,7 @@ try{
 }
 }
 
+//create product
 const product_create_post = (req,res) =>{
     const product = new Product(req.body);
     product.save()
@@ -95,6 +100,7 @@ const product_create_post = (req,res) =>{
     });
 }
 
+//trigger to render to edit page
 const product_edit_view = (req, res) => {
     const id = req.params.id;
     Product.findById(id)
@@ -111,12 +117,11 @@ const product_edit_view = (req, res) => {
         })
 }
 
+//update products' information
 const product_update = async (req, res) => {
-  
     const _id = req.params.id;
-  
     const doc = await Product.findOne({ _id });
-    // Overwrite
+// Overwrite
     doc.overwrite({
         name: req.body.name,
         image: req.body.image,
@@ -134,6 +139,7 @@ const product_update = async (req, res) => {
     })
 }
 
+//Delete 
 const product_delete = async (req,res)=>{
     Product.findByIdAndRemove(req.params.id,function (err){
         if(err){
@@ -141,10 +147,21 @@ const product_delete = async (req,res)=>{
             res.redirect("/");
         }else {
             res.redirect("/");
+            sgMail.setApiKey(sendGridApiKey);
+const msg ={
+    to:"chenfeng198510cibc@gmail.com",
+    from:"chenfeng198510@gmail.com",
+    subject:"Deleted",
+    text:"Deleted",
+    html:"<strong>Your product or service has been deleted!</strong>"
+}
+//send an email when delete products
+sgMail.send(msg);
             }
     })
   }
 
+  //render to contactus page
 const contact_us = (req, res)=> {
     let isAuthenticated = req.oidc.isAuthenticated();
     res.render("contactus", { 
@@ -153,7 +170,7 @@ const contact_us = (req, res)=> {
      });
 }
 
-
+//Building new feature
 const role_based_authentication2 = async(req,res) => {
     let data = {};
     
@@ -175,7 +192,7 @@ try{
         add: result,
          });
 
-    // when there is not error, you will be redirected to the secured page with the data you get fromt the api
+ // when there is not error, you will be redirected to the secured page with the data you get fromt the api
 }catch(e) {
     console.log(e);
     res.render('notaccess', {
@@ -185,6 +202,7 @@ try{
 }
 }
 
+//trigger button of "payment with card" to pay
 const product_payment = (req, res) => {
     stripe.customers.create({
         email: req.body.stripeEmail,
@@ -214,6 +232,7 @@ const product_payment = (req, res) => {
         })
 }
 
+//select product and render to order page
 const product_order =  (req, res) => {
     let isAuthenticated = req.oidc.isAuthenticated();
     const id = req.params.id;
@@ -235,7 +254,12 @@ const product_order =  (req, res) => {
        });
     }
 }
-  
+ 
+//testing
+const role_based_authentication3 = claimCheck((req, claims) => {
+    console.log(claims)
+});
+
 module.exports = {
 product_index,
 secured_endpoint,

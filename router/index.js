@@ -5,6 +5,8 @@ const axios = require("axios");
 const productController = require('./../controller/productController');
 
 
+
+
 router.get('/', productController.product_index);
 router.get('/secured', requiresAuth(),productController.secured_endpoint);
 
