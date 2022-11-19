@@ -257,7 +257,8 @@ const product_order =  (req, res) => {
  
 //testing
 const role_based_authentication3 = claimCheck((req, claims) => {
-    console.log(claims)
+    console.log(claims);
+    ///console.log(req.oidc.user.given_name);
 });
 
 module.exports = {
@@ -272,4 +273,5 @@ contact_us,
 role_based_authentication2,
 product_payment,
 product_order,
+role_based_authentication3,
 }

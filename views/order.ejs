@@ -23,7 +23,7 @@
     
                     <div class="navbar-collapse collapse" id="mobile_menu">
                         <ul class="nav navbar-nav">
-                            <img = "logo.jpg">
+                            
                             <li class="active"><a href="/">Home</a></li>
                             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -85,12 +85,15 @@
                       
                         <h3 class="card__title">City: <%=product.city%></h3>            
                       <h3 class="card__title">Address: <%=product.address%></h3>
+                      <br>
+                      <h5 class="card__status">Price: <%=product.price%> CAD</h5>
+                      <h5 class="card__status">PST: <%=product.price*0.07%> CAD</h5>
+                      <h5 class="card__status">GST: <%=product.price*0.05%> CAD</h5>
+                      <h5 class="card__status">Total: <%=product.price*1.12%> CAD</h5>
                       <form action="/product/payment" method="POST">
-                        <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="700" class="stripe-button" data-key="<%= key %>">
+                        <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%=product.price*100*1.12%>" class="stripe-button" data-key="<%= key %>">
                         </script>
                         </form> 
-                      <br>
-                      <span class="card__status">Price: <%=product.price%> CAD</span>
                       <img class="card__thumb" src="/image.jpg" alt="" style="height:50; width:50px">
                   <p class="card__description">Feedbacks from other Customers: </p>
                
