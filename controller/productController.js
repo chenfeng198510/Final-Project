@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Product = require('../models/product');
+const Order = require('../models/order');
 require('dotenv').config();
 const PUBLISHER_KEY = process.env.PUBLISHER_KEY
 const SECRET_KEY = process.env.SECRET_KEY
@@ -225,7 +226,9 @@ const product_payment = (req, res) => {
             })
         })
         .then((charge) => {
-            res.render('payment_success', { title: "Payment Success" });
+            res.render('payment_success', { 
+                title: "Payment Success", 
+            });
         })
         .catch((err) => {
             res.send(err)    // If some error occurs 
@@ -261,6 +264,16 @@ const role_based_authentication3 = claimCheck((req, claims) => {
     ///console.log(req.oidc.user.given_name);
 });
 
+const order_create_post = (req,res) =>{
+    const order = new Order(req.body);
+    order.save()
+    .then(result => {
+        res.redirect('/');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
 module.exports = {
 product_index,
 secured_endpoint,
@@ -274,4 +287,5 @@ role_based_authentication2,
 product_payment,
 product_order,
 role_based_authentication3,
+order_create_post,
 }

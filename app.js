@@ -21,6 +21,7 @@ mongoose.connection
   });
   //require schema
   require('./models/product');
+  require('./models/order');
 
 
 const config = {

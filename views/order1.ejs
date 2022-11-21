@@ -87,9 +87,6 @@
                       <h3 class="card__title">Address: <%=product.address%></h3>
                       <br>
                       <h5 class="card__status">Price: <%=product.price%> CAD</h5>
-                      
-
-                      <form action="/ordercreate" method="post">
                       <select name="insurance" id="insurance">
                         <option value=0>No Insurance</option>
                         <option value=20>Full Cover Insurance (20 CAD)</option>
@@ -108,6 +105,7 @@
                       
                       <script>let date1 = startdate;
                         let submit = document.getElementById("submit");
+let output = document.getElementById("output");
 submit.addEventListener("click", () => {
   //Create a Date object from input value
   var date1 = new Date(document.getElementById("startdate").value);
@@ -118,19 +116,16 @@ submit.addEventListener("click", () => {
     var dayDifference = Math.abs(timeDifference / (1000 * 3600 * 24));
     var p1 = (<%=product.price%> * dayDifference)+ insurance1;
     var p2 = p1*1.12;
-    var total = p2.toFixed(2) ;
-
-    output.innerHTML = `Duration: <span>${dayDifference}</span> days, Total Price Before Tax: <span>${p1} CAD, Total Price After Tax: <span>${total}</span> CAD`;
+    var p3 = p2.toFixed(2) ;
+    output.innerHTML = `Duration: <span>${dayDifference}</span> days, Total Price Before Tax: <span>${p1} CAD, Total Price After Tax: <span>${p3}</span> CAD`;
   }
   //Else display that the input is valid
   else {
     output.innerHTML = "Please select a valid date";
   }
 });
-</script>
-<input type="hidden" name="total", id="total" value="${total}">
-<button>To pay</button>
-</form>
+
+</script>  
                       <form action="/product/payment" method="POST">
                         
                         <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%= (product.price *100*1.12*3) %>" class="stripe-button" data-key="<%= key %>">
