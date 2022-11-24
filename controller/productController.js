@@ -6,7 +6,7 @@ const PUBLISHER_KEY = process.env.PUBLISHER_KEY
 const SECRET_KEY = process.env.SECRET_KEY
 const sgMail =require('@sendgrid/mail');
 const { claimCheck } = require('express-openid-connect');
-const sendGridApiKey = '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';
+const sendGridApiKey = process.env.SENDGRID_API_KEY
 const stripe = require('stripe')(SECRET_KEY);
 
 //Trigger product_index to go to Index Page
@@ -150,8 +150,8 @@ const product_delete = async (req,res)=>{
             res.redirect("/");
             sgMail.setApiKey(sendGridApiKey);
 const msg ={
-    to:"chenfeng198510cibc@gmail.com",
-    from:"chenfeng198510@gmail.com",
+    to:"chenfeng198510@gmail.com",
+    from:"chenfeng198510cibc@gmail.com",
     subject:"Deleted",
     text:"Deleted",
     html:"<strong>Your product or service has been deleted!</strong>"
@@ -205,10 +205,11 @@ try{
 
 //trigger button of "payment with card" to pay
 const product_payment = (req, res) => {
+    console.log(req.body.finalprice);
     stripe.customers.create({
         email: req.body.stripeEmail,
         source: req.body.stripeToken,
-        name: "Chen Feng",
+        name: req.body.stripeName,
         address: {
             line1: '470 Irmin St',
             postal_code: 'V5J1H2',
@@ -219,7 +220,7 @@ const product_payment = (req, res) => {
     })
         .then((customer) => {
             return stripe.charges.create({
-                amount: 7000,
+                amount: req.body.finalprice,
                 description: "Product Development",
                 currency: "USD",
                 customer: customer.id
@@ -264,16 +265,26 @@ const role_based_authentication3 = claimCheck((req, claims) => {
     ///console.log(req.oidc.user.given_name);
 });
 
+//order button
 const order_create_post = (req,res) =>{
     const order = new Order(req.body);
+    let isAuthenticated = req.oidc.isAuthenticated();
     order.save()
     .then(result => {
-        res.redirect('/');
+        res.render("confirm", {
+               product: result, 
+                user: req.oidc.user,
+                isAuthenticated: isAuthenticated,
+                key: PUBLISHER_KEY,
+           });
     })
     .catch(err => {
         console.log(err);
     });
 }
+
+//confirm page
+
 module.exports = {
 product_index,
 secured_endpoint,
@@ -288,4 +299,5 @@ product_payment,
 product_order,
 role_based_authentication3,
 order_create_post,
+
 }

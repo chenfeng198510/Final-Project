@@ -10,28 +10,74 @@ const orderSchema = new mongoose.Schema({
     trim: true,
   },
   price:{
-    type: String,
+    type: Number,
     trim: true,
   },
 
   insurance: {
     type: Number,
 },
-  startday:{
+  startdate:{
     type: Date,
   },
 
-  endday:{
+  enddate:{
     type: Date,
-    
   },
+
   duration:{
     type:Number,
-  },
+    default: function() {
+      var date1 = new Date(this.startdate);
+      var date2 = date1.getTime();
+      var date3 = new Date(this.enddate);
+      var date4 = date3.getTime();
+      var difference= Math.abs((date4 - date2) / (1000 * 3600 * 24));
+      return difference
+    }
+},
+
   total: {
     type:Number,
+    default: function() {
+      var t = (this.price + this.insurance) * this.duration;
+      var total =t.toFixed(2);
+
+      return total
+    }
+    },
+
+GST: {
+  type:Number,
+  default: function() {
+    var gst =(0.07*this.total).toFixed(2);
+
+    return gst
   }
+},
+
+PST:{
+  type:Number,
+  default: function() {
+    var pst = (0.05*this.total).toFixed(2);
+
+    return pst
+  }
+},
+
+totalaftax:{
+  type:Number,
+  default: function() {
+    var totalaftax = (this.total + this.GST + this.PST).toFixed(2);
+
+    return totalaftax
+  }
+},
+
 });
+
+  
+
 
 const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

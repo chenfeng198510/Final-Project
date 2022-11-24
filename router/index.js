@@ -16,6 +16,7 @@ router.get("/contactus",productController.contact_us);
 router.get('/application', requiresAuth(),productController.role_based_authentication3);
 router.get('/create', requiresAuth(),productController.role_based_authentication);
 router.get("/order/:id", requiresAuth(), productController.product_order);
+//router.get("/confirm/:id", requiresAuth(), productController.product_confirm);
 router.get('/product/:id', productController.product_edit_view);
 //the three is just for admin
 

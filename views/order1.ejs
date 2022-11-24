@@ -103,7 +103,8 @@
                          <div id="output">Select the dates to get started</div>
                       <label for="duration">Duration: </label> <p id="d1"> </p>
                       
-                      <script>let date1 = startdate;
+                      <script>
+                      let date1 = startdate;
                         let submit = document.getElementById("submit");
 let output = document.getElementById("output");
 submit.addEventListener("click", () => {
@@ -124,11 +125,20 @@ submit.addEventListener("click", () => {
     output.innerHTML = "Please select a valid date";
   }
 });
+</script> 
 
-</script>  
+
+
+
+
+
+
+
+
+<!-- Payment's logic need to be upated -->
                       <form action="/product/payment" method="POST">
                         
-                        <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%= (product.price *100*1.12*3) %>" class="stripe-button" data-key="<%= key %>">
+                        <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%= order.totalaftax%>" class="stripe-button" data-key="<%= key %>">
 
                         </script>
                         </form> 

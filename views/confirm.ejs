@@ -77,42 +77,26 @@
 
    <container class="container-fluid">
               <div class="card">
-                <img src="<%= product.image %>" class="card__image" >
-             
-          
-                    <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                    
-                      
-                        <h3 class="card__title">City: <%=product.city%></h3>            
-                      <h3 class="card__title">Address: <%=product.address%></h3>
-                      <br>
-                      <h5 class="card__status">Price: <%=product.price%> CAD</h5>
-                      
+                <h3>Host Address: <%= product.startdate %></h3>
+                <h3>Price: <%= product.price %> CAD per Day</h3>
+                <h3>Start from: <%= product.startdate %></h3>
+                <h3>Leave on: <%= product.enddate %> </h3>
+            <h3>Duration: <%= product.duration %></h3>
+            <h3>Insurance: <%= product.duration %></h3>
+            <h3>GST: <%= product.GST %></h3>
+            <h3>PST: <%= product.PST %></h3>
+            <h3>Total Price After Tax: <%= product.totalaftax %></h3>
 
-<form action="/ordercreate" method="post">
-                      <select name="insurance" id="insurance">
-                        <option value=0>No Insurance</option>
-                        <option value=20>Full Cover Insurance (20 CAD)</option>
-                      </select>
-                      <br>
-                      <label for="startdate">Start Date: </label>
-                      <input type="Date" id="startdate" name="startdate">
-                      
-                      <br>
-                      <label for="enddate">End Date: </label>
-                      <input type="Date" id="enddate" name="enddate">
-                      <input type="hidden" id="name" name="name" value="<%=product.name%>">
-                      <input type="hidden" id="address" name="address" value="<%=product.address%>">
-                      <input type="hidden" id="price" name="price" value="<%=product.price%>">
-                    
-                      <br>
-<button>To pay</button>
+<form action="/product/payment" method="POST">
+    <input type="hidden" id="finalprice" name="finalprice" value="<%= product.totalaftax*100 %>">          
+    <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%= product.totalaftax*100 %>" class="stripe-button" data-key="<%= key %>">
 
-</form>
+    </script>
+    </form> 
 
 
                       <img class="card__thumb" src="/image.jpg" alt="" style="height:50; width:50px">
-                  <p class="card__description">Feedbacks from other Customers: </p>
+
                
             </div>          
     </container>
