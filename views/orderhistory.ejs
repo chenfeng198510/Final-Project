@@ -18,10 +18,11 @@
 <<div class="container mt-5">
     <div class="d-flex justify-content-center row">
         <div class="col-md-10">
+            
             <div class="rounded">
                 <div class="table-responsive table-borderless">
                     <table class="table">
-                        <thead>
+                        <thead style="background-color:orange;">
                             <tr>
                                 <th class="text-center">
                                     <div class="toggle-btn">
@@ -29,13 +30,15 @@
                                     </div>
                                 </th>
                                 <th>Order #</th>
-                                <th>Company name</th>
-                                <th>status</th>
-                                <th>Total</th>
-                                <th>Created</th>
-                                <th></th>
+                                <th>Email</th>
+                                <th>Order Status</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Duration</th>
+                                <th>Total Price</th>
                             </tr>
                         </thead>
+                        
                         <tbody class="table-body">
                             <tr class="cell-1">
                                 <td class="text-center">
@@ -43,11 +46,30 @@
                                         <div class="inner-circle"></div>
                                     </div>
                                 </td>
-                                <td>#SO-13487</td>
-                                <td>Gasper Antunes</td>
+                                <td><%=order._id%></td>
+                                <td><%=order.user%></td>
+                                <td><span class="badge badge-success">Fullfilled</span></td>
+                                <td><%=order.startdate%></td>
+                                <td><%=order.enddate%></td>
+                                <td><%= order.duration %></td>
+                                <td><%= order.totalaftax %></td>
+                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
+                            </tr>
+            
+                        </tbody>
+                        <tbody class="table-body">
+                            <tr class="cell-1">
+                                <td class="text-center">
+                                    <div class="toggle-btn">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                </td>
+                                <td><%=order._id%></td>
+                                
+                                <td><%=order.user%></td>
                                 <td><span class="badge badge-success">Fullfilled</span></td>
                                 <td>$2674.00</td>
-                                <td>Today</td>
+                                <td><%=order.duration%></td>
                                 <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
                             </tr>
             

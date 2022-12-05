@@ -286,9 +286,20 @@ const role_based_authentication3 = claimCheck((req, claims) => {
 
 //order button
 const order_create_post = (req,res) =>{
-    const order = new Order(req.body);
+    const order1 = {
+        insurance: req.body.insurance,
+        user: req.oidc.user.email,
+        startdate:req.body.startdate,
+        enddate:req.body.enddate,
+        name:req.body.name,
+        price:req.body.price,
+        address:req.body.address,
+    }
+    const order = new Order(order1);
     let isAuthenticated = req.oidc.isAuthenticated();
+
     order.save()
+    //render to confirm
     .then(result => {
         res.render("confirm", {
                product: result, 
@@ -301,7 +312,6 @@ const order_create_post = (req,res) =>{
         console.log(err);
     });
 }
-
 
 
 const personal_profile = (req, res) => {
@@ -327,9 +337,9 @@ const personal_profile = (req, res) => {
 
 const orderhistory = (req,res) =>{
     let isAuthenticated = req.oidc.isAuthenticated();
-    const id = req.params.id;
-     Order.findById(id)
-    .then(result => {
+    const order2= req.oidc.user.email;
+    const order3 = Order.findOne({order2});
+    order3.then(result => {
         res.render("Orderhistory", {
                order: result, 
                 user: req.oidc.user,

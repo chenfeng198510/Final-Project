@@ -77,7 +77,7 @@ totalaftax:{
 },
 
 user: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref : 'User'
 }
 });
