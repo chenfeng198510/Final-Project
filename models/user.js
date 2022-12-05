@@ -24,10 +24,31 @@ const userSchema = new Schema({
     type: String,
     trim: true,
   },
+  country: {
+    type: String,
+    trim: true,
+  },
+  birthday:{
+    type: Date,
+    trim:true,
+  },
+  occupation:{
+    type: String,
+    trim: true,
+  },
+  phone1:{
+    type: Number,
+    trim: true,
+  },
+  phone2:{
+    type: Number,
+    trim: true,
+  },
   order: {
     type: Schema.Types.ObjectId,
       ref : 'Order'
     }
+
 });
 
 const User = mongoose.model('User', userSchema);
