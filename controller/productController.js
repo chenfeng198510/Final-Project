@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Product = require('../models/product');
 const Order = require('../models/order');
+const User = require('../models/user');
 require('dotenv').config();
 const PUBLISHER_KEY = process.env.PUBLISHER_KEY
 const SECRET_KEY = process.env.SECRET_KEY
@@ -10,9 +11,25 @@ const sendGridApiKey = process.env.SENDGRID_API_KEY
 const stripe = require('stripe')(SECRET_KEY);
 
 //Trigger product_index to go to Index Page
-const product_index = (req, res)=> {
+const product_index = async (req, res)=> {
     let isAuthenticated = req.oidc.isAuthenticated();
+
     if(isAuthenticated) {
+        const user = {
+            user_id: req.oidc.user.sub,
+            name: req.oidc.user.name,
+            email:req.oidc.user.email,
+            picture: req.oidc.user.picture,
+        }
+        const email1 = req.oidc.user.email;
+        const doc = await User.findOne({ email1 });
+            console.log(doc);
+            if (doc != null) {
+            }else{
+                const user2 = new User(user);
+                user2.save();
+            }
+
       Product.find().sort({
           createdAt: -1
       }).then(result => {
@@ -45,6 +62,7 @@ const secured_endpoint = async (req, res)=> {
         data =apiResponse.data;
     }catch(e){
         console(e);
+    
     }
         
     res.render("secured", { 
@@ -99,6 +117,7 @@ const product_create_post = (req,res) =>{
     .catch(err => {
         console.log(err);
     });
+    console.log(req.body);
 }
 
 //trigger to render to edit page
@@ -283,7 +302,46 @@ const order_create_post = (req,res) =>{
     });
 }
 
-//confirm page
+
+
+const personal_profile = (req, res) => {
+    let isAuthenticated = req.oidc.isAuthenticated();
+    const id = req.params.id;
+    if(isAuthenticated) {
+     User.findById(id)
+      .then(result => {
+          res.render("profile", {
+               user: result, 
+              title: "Personal Profil",
+              isAuthenticated: isAuthenticated,
+                user: req.oidc.user,
+           });
+      });
+      } else {
+      res.render("noindex", { 
+          title: "My auth app",
+          isAuthenticated: isAuthenticated
+       });
+    }
+}
+
+const orderhistory = (req,res) =>{
+    let isAuthenticated = req.oidc.isAuthenticated();
+    const id = req.params.id;
+     Order.findById(id)
+    .then(result => {
+        res.render("Orderhistory", {
+               order: result, 
+                user: req.oidc.user,
+                isAuthenticated: isAuthenticated,
+             
+           });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
 
 module.exports = {
 product_index,
@@ -299,5 +357,6 @@ product_payment,
 product_order,
 role_based_authentication3,
 order_create_post,
-
+personal_profile,
+orderhistory,
 }

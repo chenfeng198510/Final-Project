@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const User = require('./user');
+const Schema = mongoose.Schema;
 //productSchema code defines a property in the documents that will be added to the MongoDB database
-const orderSchema = new mongoose.Schema({
+const orderSchema = new Schema({
   name: {
     type: String,
     trim: true,
@@ -24,7 +26,7 @@ const orderSchema = new mongoose.Schema({
   enddate:{
     type: Date,
   },
-
+  
   duration:{
     type:Number,
     default: function() {
@@ -74,6 +76,10 @@ totalaftax:{
   }
 },
 
+user: {
+      type: Schema.Types.ObjectId,
+      ref : 'User'
+}
 });
 
   
