@@ -338,7 +338,8 @@ const personal_profile = (req, res) => {
 const orderhistory = (req,res) =>{
     let isAuthenticated = req.oidc.isAuthenticated();
     const order2= req.oidc.user.email;
-    const order3 = Order.findOne({order2});
+    const order3 = Order.find({user:order2});
+    console.log(order2);
     order3.then(result => {
         res.render("Orderhistory", {
                order: result, 
@@ -352,7 +353,43 @@ const orderhistory = (req,res) =>{
     });
 }
 
+const user_edit = (req, res) => {
+    const id = req.params.id;
+    User.findById(id)
+        .then(result => {
+            res.render('useredit', {
+                product: result,
+                title: "User Edit",
+                isAuthenticated: req.oidc.isAuthenticated(),
+                user: req.oidc.user
+            });
+        })
+        .catch(err => {
+            console.log("Error ", err);
+        })
+}
 
+//update products' information
+const user_update = async (req, res) => {
+    const _id = req.params.id;
+    const doc = await User.findOne({ _id });
+// Overwrite
+    doc.overwrite({
+        name: req.body.name,
+        image: req.body.image,
+        address: req.body.address,
+        city: req.body.city,
+        price: req.body.price
+    })
+
+    await doc.save()
+    .then(() => {
+        res.redirect('/');
+    })
+    .catch(err => {
+        console.log("ERROR ", err);
+    })
+}
 module.exports = {
 product_index,
 secured_endpoint,
@@ -369,4 +406,6 @@ role_based_authentication3,
 order_create_post,
 personal_profile,
 orderhistory,
+user_edit,
+user_update,
 }

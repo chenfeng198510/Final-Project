@@ -20,6 +20,7 @@ router.get("/profile",productController.personal_profile);
 router.get("/orderhistory",productController.orderhistory);
 //router.get("/confirm/:id", requiresAuth(), productController.product_confirm);
 router.get('/product/:id', productController.product_edit_view);
+router.get('/useredit/:id', productController.user_edit);
 //the three is just for admin
 
 router.post('/add', productController.product_create_post);

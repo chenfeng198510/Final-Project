@@ -30,15 +30,18 @@
                                     </div>
                                 </th>
                                 <th>Order #</th>
+                                <th>Product Name</th>
                                 <th>Email</th>
                                 <th>Order Status</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Duration</th>
                                 <th>Total Price</th>
+                                <th>Comfirm</th>
+                                <th>Cancel</th>
                             </tr>
                         </thead>
-                        
+                        <% order.forEach(function(order){ %> 
                         <tbody class="table-body">
                             <tr class="cell-1">
                                 <td class="text-center">
@@ -46,35 +49,22 @@
                                         <div class="inner-circle"></div>
                                     </div>
                                 </td>
+                               
                                 <td><%=order._id%></td>
+                                <td><%=order.name%></td>
                                 <td><%=order.user%></td>
-                                <td><span class="badge badge-success">Fullfilled</span></td>
+                                
+                                <td><span class="badge badge-success"><%=order.status%></span></td>
                                 <td><%=order.startdate%></td>
                                 <td><%=order.enddate%></td>
                                 <td><%= order.duration %></td>
                                 <td><%= order.totalaftax %></td>
                                 <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
                             </tr>
-            
-                        </tbody>
-                        <tbody class="table-body">
-                            <tr class="cell-1">
-                                <td class="text-center">
-                                    <div class="toggle-btn">
-                                        <div class="inner-circle"></div>
-                                    </div>
-                                </td>
-                                <td><%=order._id%></td>
-                                
-                                <td><%=order.user%></td>
-                                <td><span class="badge badge-success">Fullfilled</span></td>
-                                <td>$2674.00</td>
-                                <td><%=order.duration%></td>
-                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                            </tr>
-            
+                            <% }) %>
                         </tbody>
                     </table>
+                 
                 </div>
             </div>
         </div>

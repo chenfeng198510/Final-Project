@@ -18,13 +18,16 @@ const orderSchema = new Schema({
 
   insurance: {
     type: Number,
+    required:true,
 },
   startdate:{
     type: Date,
+    required:true,
   },
 
   enddate:{
     type: Date,
+    required:true,
   },
   
   duration:{
@@ -79,10 +82,15 @@ totalaftax:{
 user: {
       type: String,
       ref : 'User'
-}
+},
+
+status: {
+  type:String,
+  default:'Pending',
+}  
 });
 
-  
+status: {}  
 
 
 const Order = mongoose.model('Order', orderSchema);
