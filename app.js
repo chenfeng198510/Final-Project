@@ -22,6 +22,8 @@ mongoose.connection
   //require schema
   require('./models/product');
   require('./models/order');
+  require('./models/user');
+  require('./models/profile');
 
 
 const config = {

@@ -2,6 +2,7 @@ const axios = require('axios');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const User = require('../models/user');
+const Profile = require('../models/profile');
 require('dotenv').config();
 const PUBLISHER_KEY = process.env.PUBLISHER_KEY
 const SECRET_KEY = process.env.SECRET_KEY
@@ -22,14 +23,14 @@ const product_index = async (req, res)=> {
             picture: req.oidc.user.picture,
         }
         const email1 = req.oidc.user.email;
-        const doc = await User.findOne({ email1 });
+        console.log(email1);
+        const doc = await User.findOne({ email:email1 });
             console.log(doc);
             if (doc != null) {
             }else{
                 const user2 = new User(user);
                 user2.save();
             }
-
       Product.find().sort({
           createdAt: -1
       }).then(result => {
@@ -126,7 +127,7 @@ const product_edit_view = (req, res) => {
     Product.findById(id)
         .then(result => {
             res.render('edit', {
-                product: result,
+                useredit: result,
                 title: "Product Edit",
                 isAuthenticated: req.oidc.isAuthenticated(),
                 user: req.oidc.user
@@ -140,6 +141,7 @@ const product_edit_view = (req, res) => {
 //update products' information
 const product_update = async (req, res) => {
     const _id = req.params.id;
+    //console.log(_id);
     const doc = await Product.findOne({ _id });
 // Overwrite
     doc.overwrite({
@@ -191,36 +193,7 @@ const contact_us = (req, res)=> {
 }
 
 //Building new feature
-const role_based_authentication2 = async(req,res) => {
-    let data = {};
-    
-const { token_type, access_token } = req.oidc.accessToken;
 
-try{
-    // calling the server to get the data, make sure you get the data before moving forward(async, await)
-    const apiResponse = await axios.get('http://localhost:5000/host', {
-        headers: {
-            authorization: `${token_type} ${access_token}`
-        }
-    });
-    data = apiResponse.data;
-        res.render("hostapplication", { 
-        title: 'Host User', 
-        isAuthenticated: req.oidc.isAuthenticated(),
-        user: req.oidc.user,
-        data: data,
-        add: result,
-         });
-
- // when there is not error, you will be redirected to the secured page with the data you get fromt the api
-}catch(e) {
-    console.log(e);
-    res.render('notaccess', {
-        title: 'Not Access Page',
-        isAuthenticated: req.oidc.isAuthenticated()
-      });
-}
-}
 
 //trigger button of "payment with card" to pay
 const product_payment = (req, res) => {
@@ -281,7 +254,7 @@ const product_order =  (req, res) => {
 //testing
 const role_based_authentication3 = claimCheck((req, claims) => {
     console.log(claims);
-    ///console.log(req.oidc.user.given_name);
+    
 });
 
 //order button
@@ -312,34 +285,10 @@ const order_create_post = (req,res) =>{
         console.log(err);
     });
 }
-
-
-const personal_profile = (req, res) => {
-    let isAuthenticated = req.oidc.isAuthenticated();
-    const id = req.params.id;
-    if(isAuthenticated) {
-     User.findById(id)
-      .then(result => {
-          res.render("profile", {
-               user: result, 
-              title: "Personal Profil",
-              isAuthenticated: isAuthenticated,
-                user: req.oidc.user,
-           });
-      });
-      } else {
-      res.render("noindex", { 
-          title: "My auth app",
-          isAuthenticated: isAuthenticated
-       });
-    }
-}
-
 const orderhistory = (req,res) =>{
     let isAuthenticated = req.oidc.isAuthenticated();
     const order2= req.oidc.user.email;
     const order3 = Order.find({user:order2});
-    console.log(order2);
     order3.then(result => {
         res.render("Orderhistory", {
                order: result, 
@@ -353,43 +302,131 @@ const orderhistory = (req,res) =>{
     });
 }
 
-const user_edit = (req, res) => {
+
+const personal_profile = async (req, res) => {
+    let isAuthenticated = req.oidc.isAuthenticated();
     const id = req.params.id;
-    User.findById(id)
-        .then(result => {
+    const user4 = User.findById(id);
+    const emailp = req.oidc.user.email;
+    const docp = await Profile.findOne({ email:emailp });
+    if(docp != null) {
+        const profile2= req.oidc.user.email;
+        console.log(profile2);
+    const profile3 = Profile.findOne({email:profile2});
+        profile3.then(result => {
+          res.render("profile", {
+               profile: result, 
+              title: "Personal Profil",
+              isAuthenticated: isAuthenticated,
+                user: req.oidc.user,
+           });
+      });
+      } else {
+        user4.then(result => {
             res.render('useredit', {
-                product: result,
+                profile: result,
                 title: "User Edit",
                 isAuthenticated: req.oidc.isAuthenticated(),
-                user: req.oidc.user
+                user: req.oidc.user,
             });
         })
         .catch(err => {
             console.log("Error ", err);
+        });
+    }
+}
+
+
+
+const user_edit = (req, res) => {
+    const id = req.params.id;
+    const user4 = User.findById(id);
+        user4.then(result => {
+            res.render('useredit', {
+                profile: result,
+                title: "User Edit",
+                isAuthenticated: req.oidc.isAuthenticated(),
+                user: req.oidc.user,
+            });
         })
+        .catch(err => {
+            console.log("Error ", err);
+        });
+
 }
 
 //update products' information
 const user_update = async (req, res) => {
-    const _id = req.params.id;
-    const doc = await User.findOne({ _id });
+    const email2 = req.oidc.user.email;
+    const doc3 = await Profile.findOne({ email:email2 });
+    if(doc3 != null) {
 // Overwrite
-    doc.overwrite({
-        name: req.body.name,
-        image: req.body.image,
-        address: req.body.address,
+    doc3.overwrite({
+        nickName: req.body.nickName,
+        picture: req.body.picture,
+        occupation:req.body.occupation,
         city: req.body.city,
-        price: req.body.price
+        country:req.body.country,
+        birthday:req.body.birthday,
+        phone1: req.body.phone1,
+        phon2:req.body.phone2,
+        email:req.oidc.user.email,
+        petname: req.body.petname,
+        pettype: req.body.pettype,
+        petimage: req.body.petimage,
+        petname2: req.body.petname2,
+        pettype2: req.body.pettype2,
+        petimage2: req.body.petimage2,
+        petname3: req.body.petname3,
+        pettype3: req.body.pettype3,
+        petimage3: req.body.petimage3,
+        petname4: req.body.petname4,
+        pettype4: req.body.pettype4,
+        petimage4: req.body.petimage4,
     })
-
-    await doc.save()
+    await doc3.save()
     .then(() => {
-        res.redirect('/');
+        res.redirect('profile');
     })
     .catch(err => {
         console.log("ERROR ", err);
-    })
+    });
+}else{    
+    const doc4 = {
+        nickName: req.body.nickName,
+        picture: req.body.picture,
+        occupation:req.body.occupation,
+        city: req.body.city,
+        country:req.body.country,
+        birthday:req.body.birthday,
+        phone1: req.body.phone1,
+        phon2:req.body.phone2,
+        email:req.oidc.user.email,
+        petname: req.body.petname,
+        pettype: req.body.pettype,
+        petimage: req.body.petimage,
+        petname2: req.body.petname2,
+        pettype2: req.body.pettype2,
+        petimage2: req.body.petimage2,
+        petname3: req.body.petname3,
+        pettype3: req.body.pettype3,
+        petimage3: req.body.petimage3,
+        petname4: req.body.petname4,
+        pettype4: req.body.pettype4,
+        petimage4: req.body.petimage4,
 }
+const doc5 = new Profile(doc4);
+doc5.save()
+//render to confirm
+.then(result => {
+    res.redirect('profile');
+})
+.catch(err => {
+    console.log(err);
+});
+}
+}
+
 module.exports = {
 product_index,
 secured_endpoint,
@@ -399,7 +436,6 @@ product_edit_view,
 product_update,
 product_delete,
 contact_us,
-role_based_authentication2,
 product_payment,
 product_order,
 role_based_authentication3,
@@ -408,4 +444,6 @@ personal_profile,
 orderhistory,
 user_edit,
 user_update,
+
+
 }

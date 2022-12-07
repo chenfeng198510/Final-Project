@@ -90,7 +90,7 @@ status: {
 }  
 });
 
-status: {}  
+
 
 
 const Order = mongoose.model('Order', orderSchema);
