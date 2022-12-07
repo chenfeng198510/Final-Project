@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+    <title>Host Edit</title>
+</head>
+<body>
+  <%- include ('partial/nav') %>
+  <div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3 style="color:white">Hello <%=user.name%>!</h3>
+            <h3 class="orange-text" style="color:white">If this is your first time to profile, you should compelete this form</h3>
+        </div>
+    </div>
+
+<style >
+  body{color: #000;overflow-x: hidden;height: 100%;
+  background-image: url("https://thumbs.dreamstime.com/b/closeup-welcome-sign-cat-figures-hanging-wooden-fence-closeup-welcome-sign-cat-figures-hanging-205793424.jpg");
+  background-repeat: no-repeat;background-size: 1800px 1000px}
+  .card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}
+  .blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}
+  input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}
+  input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}
+  .btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}
+  button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}
+</style>
+    
+  <div class="update-products content">
+    <form action="/user_edit" method="post" style="display: inline-grid;">
+      <div class="row justify-content-between text-left" >
+        <div class="form-group col-sm-6 flex-column d-flex"> 
+          <label class="form-control-label px-3" style="color:white">Nick name<span class="text-danger"> *</span></label>
+           <input type="text" id="nickName" name="nickName" placeholder="Enter your Nick Name" onblur="validate(1)">
+        </div>
+        <div class="form-group col-sm-6 flex-column d-flex"> 
+          <label class="form-control-label px-3"style="color:white">Image<span class="text-danger"> *</span></label>
+           <input type="text" id="picture" name="picture" placeholder="URL-IMAGE" onblur="validate(2)"> </div>
+        </div>
+
+      <div class="form-group col-sm-6 flex-column d-flex"> 
+        <label class="form-control-label px-3"style="color:white">Pet Name<span class="text-danger"> *</span></label> 
+        <input type="text" id="petname" name="petname" placeholder="petname" onblur="validate(5)"> </div>
+      </div>
+
+      <div class="form-group col-12 flex-column d-flex"> 
+        <label class="form-control-label px-3" style="color:white">Pet Image<span class="text-danger"> *</span></label> 
+        <input type="text" id="petimage" name="petimage" placeholder="" onblur="validate(6)"> </div>
+        
+      </div>
+  <div class="row justify-content-between text-left">
+  <label for="pettype" style="color:white">Pet Type</label>
+        <select name="pettype" id="pettype">
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Other">Other</option>
+        </select>
+  </div>
+    <div class="row justify-content-between text-left">
+        <div class="form-group col-sm-6 flex-column d-flex"> 
+          <label class="form-control-label px-3" style="color:white">Occupation<span class="text-danger"> *</span></label> 
+          <input type="text" id="occupation" name="occupation" placeholder="occupation" onblur="validate(3)"> 
+        </div>
+
+        <div class="form-group col-sm-6 flex-column d-flex"> 
+          <label for="country" style="color:white">Country</label>
+          <select name="city" id="city">
+            <option value="Vancouver" style="color:white">Vancouver</option>
+            <option value="Toronto" style="color:white">Toronto</option>
+          </select>
+            <select name="country" id="country" style="color:white">
+           <option value="Canada" style="color:white">Canada</option> 
+            </select>
+        </div>
+        <div class="form-group col-sm-6 flex-column d-flex"> 
+          <label for="birthday" style="color:white">Birthday</label>
+            <input type="date" id="birthday" name="birthday">
+            <BR>
+          <label class="form-control-label px-3" style="color:white">Phone number<span class="text-danger"> *</span></label> 
+          <input type="text" id="phone1" name="phone1" placeholder="Phone Number" onblur="validate(4)"> </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <button class="btn-block btn-primary">Submit</button>
+    </div>
+    </form>
+
+  
+</body>
