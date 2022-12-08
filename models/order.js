@@ -7,6 +7,11 @@ const orderSchema = new Schema({
     type: String,
     trim: true,
   },
+  image:{
+    type: String,
+    trim: true,
+  },
+
   address: {
     type: String,
     trim: true,

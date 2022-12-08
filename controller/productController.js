@@ -267,6 +267,7 @@ const order_create_post = (req,res) =>{
         name:req.body.name,
         price:req.body.price,
         address:req.body.address,
+        image:req.body.image,
     }
     const order = new Order(order1);
     let isAuthenticated = req.oidc.isAuthenticated();
