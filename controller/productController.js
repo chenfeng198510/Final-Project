@@ -87,7 +87,8 @@ try{
         }
     });
     data = apiResponse.data;
-    Product.find().sort({
+    const order2= req.oidc.user.email;
+    Product.find({owner:order2}).sort({
         createdAt: -1
     }).then(result => {
         res.render("create", { 
@@ -110,7 +111,17 @@ try{
 
 //create product
 const product_create_post = (req,res) =>{
-    const product = new Product(req.body);
+    console.log(req.oidc.user.picture);
+    const product1 = {
+        name: req.body.name,
+        owner: req.oidc.user.email,
+        address:req.body.address,
+        city:req.body.city,
+        price:req.body.price,
+        image:req.body.image,
+        ownerimage:req.oidc.user.picture,
+    }
+    const product = new Product(product1);
     product.save()
     .then(result => {
         res.redirect('/');

@@ -26,6 +26,16 @@ const productSchema = new mongoose.Schema({
     type:Number,
     required:true,
   },
+  owner:{
+    type:String,
+    default:'chenfeng198510@gmail.com',
+  },
+
+  ownerimage: {
+    type: String,
+    trim: true,
+    default: 'https://www.dogtime.com/assets/uploads/2011/01/file_23012_beagle-460x290.jpg',
+  }
 });
 
 const Product = mongoose.model('Product', productSchema);

@@ -36,7 +36,8 @@
   <section class="show">
     <table class="table">
         <th>Name</th>
-        <th>Image`</th>
+        <th>Image</th>
+        <th>Owner</th>
         <th>Price</th>
         <th>Address</th>
         <th>City</th>
@@ -44,6 +45,7 @@
     <% add.forEach(function(product){ %>
         <tr> <td> <h4><%= product.name %></h4> </td>    
         <td><img src="<%= product.image %>" alt="" style="width: 100px;height: 100px;"> </td>
+        <td><h5><%=product.owner%></h5></td>
         <td><h5><%=product.price%></h5></td>
         <td><h5><%=product.address%></h5></td>
         <td><h5><%=product.city%></h5></td>
