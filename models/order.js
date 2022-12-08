@@ -30,9 +30,37 @@ const orderSchema = new Schema({
     required:true,
   },
 
+  startdate1:{
+    type: String,
+    default: function() {
+  
+      var dateObj = new Date(this.startdate);
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      
+      startdate1 = year + "/" + month + "/" + day;
+      return startdate1
+    }
+  },
+
   enddate:{
     type: Date,
     required:true,
+  },
+
+  enddate1:{
+    type: String,
+    default: function() {
+  
+      var dateObj = new Date(this.enddate);
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      
+      enddate1 = year + "/" + month + "/" + day;
+      return enddate1
+    }
   },
   
   duration:{

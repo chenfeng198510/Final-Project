@@ -58,13 +58,13 @@
 							<span class="review-no">10 reviews</span>
 						</div>
 						<h4 class="price">current price: <span><%=product.price%> CAD per Day</span></h4>
-                        <h4 class="price">Start from: <span><%= product.startdate %></span></h4>
-                        <h4 class="price">Leave on: <span><%= product.enddate %></span></h4>
+                        <h4 class="price">Start from: <span><%= product.startdate1 %></span></h4>
+                        <h4 class="price">Leave on: <span><%= product.enddate1 %></span></h4>
                         <h4 class="price">Duration: <span><%= product.duration %> days</span></h4>
-                        <h4 class="price">Insurance: <span><%= product.insurance %></span></h4>
-                        <h4 class="price">GST: <span><%= product.GST %></span></h4>
-                        <h4 class="price">PST: <span><%= product.PST %></span></h4>
-                        <h4 class="price">Total Price After Tax: <span><%= product.totalaftax %></span></h4>
+                        <h4 class="price">Insurance: <span><%= product.insurance %> CAD</span></h4>
+                        <h4 class="price">GST: <span><%= product.GST %> CAD</span></h4>
+                        <h4 class="price">PST: <span><%= product.PST %> CAD</span></h4>
+                        <h4 class="price">Total Price After Tax: <span><%= product.totalaftax %> CAD</span></h4>
                         <form action="/product/payment" method="POST">
                             <input type="hidden" id="finalprice" name="finalprice" value="<%= product.totalaftax*100 %>">          
                             <script src="https://checkout.stripe.com/v2/checkout.js" data-amount="<%= product.totalaftax*100 %>" class="stripe-button" data-key="<%= key %>">
