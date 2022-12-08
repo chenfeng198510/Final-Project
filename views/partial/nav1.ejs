@@ -1,53 +1,49 @@
-<div class="navbar">
+<div class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12" >
+            <div class="col-lg-12">
 
                 <div class="navbar-header">
-                    
-                    
-                    <a href="#" class="navbar-brand"><img src="logo.jpg" alt="logo" height="24"></a>
-                    <a href="#" class="navbar-brand" style="color:white;">Lovely Pet</a>
+                    <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a href="#" class="navbar-brand" style:color:"white">Lovely Pet</a>
                 </div>
 
                 <div class="navbar-collapse collapse" id="mobile_menu">
                     <ul class="nav navbar-nav">
                         
-                        <li class="active"><a href="index" style="color:white;">Home</a></li>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white;">About Us <span class="caret"></span></a>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="create">Host</a></li>
+                        <li><a href="/orderhistory">Order History</a></li>
+                        <li><a href="/profile">Personal Profile</a></li>
+                        <li><a href="/contactus">Contact Us</a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Company History</a></li>
                                 <li><a href="#">Employee</a></li>
-                                <li><a href="#">Products</a></li>
-                                <li><a href="#">Become Host</a></li>
                                 <li><a href="#">Pet Insurance</a></li>
-                                <li><a href="#">More</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="color:white;">Welcome</a></li>
-                        <li><a href="#" style="color:white;">Services</a></li>
-                        <li><a href="/secured" style="color:white;">Secured</a></li>
-                        <li><a href="contactus" style="color:white;">Contact Us</a></li>
                     </ul>
                     <ul class="nav navbar-nav">
                         <li>
                             <form action="" class="navbar-form">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="search" name="search" id="" placeholder="Search Anything Here..." class="form-control">
+                                        <input type="search" onkeyup="myFunction()"name="search" id="myinput" placeholder="Search Anything Here..." class="form-control">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
                                     </div>
                                 </div>
                             </form>
                         </li>
                     </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         <% if(!isAuthenticated) { %>
                             <li><a href="/login">Login</a></li>
-                            
+                           
                         <% } else { %>
-                            <li><a href="/logout" style="color:white;">Logout</a></li>
-                            
+                            <li><a href="/logout">Logout</a></li>
+                    
                         <% } %>
                             </ul>
                         </li>
@@ -56,5 +52,24 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByClassName("list");
+        for (i = 0; i < 10; i++) {
+            a = li[i].getElementsByTagName("h3")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+    </script>
 

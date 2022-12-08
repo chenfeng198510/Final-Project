@@ -127,7 +127,7 @@ const product_edit_view = (req, res) => {
     Product.findById(id)
         .then(result => {
             res.render('edit', {
-                useredit: result,
+                product: result,
                 title: "Product Edit",
                 isAuthenticated: req.oidc.isAuthenticated(),
                 user: req.oidc.user
@@ -355,7 +355,7 @@ const user_edit = (req, res) => {
 
 }
 
-//update products' information
+//update user' information
 const user_update = async (req, res) => {
     const email2 = req.oidc.user.email;
     const doc3 = await Profile.findOne({ email:email2 });
@@ -444,6 +444,4 @@ personal_profile,
 orderhistory,
 user_edit,
 user_update,
-
-
 }
