@@ -29,6 +29,8 @@ router.post("/delete/:id", productController.product_delete);
 router.post("/product/payment", productController.product_payment);
 router.post('/ordercreate', requiresAuth(),productController.order_create_post);
 router.post('/user_edit', productController.user_update);
+router.post('/confirm/:id', productController.order_confirm);
+router.post('/cancel/:id', productController.order_cancel);
 
 
 

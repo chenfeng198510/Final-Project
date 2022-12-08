@@ -428,6 +428,36 @@ doc5.save()
 }
 }
 
+const order_confirm = (req, res) => {
+    const id = req.params.id;
+    Order.findByIdAndUpdate(id, {status:'Confirmed'},
+    function (err) {
+if (err){
+console.log(err);
+res.redirect('/');
+}
+else{
+console.log("Updated User : ");
+res.redirect('/orderhistory');
+}
+        });
+}
+
+const order_cancel = (req, res) => {
+    const id = req.params.id;
+    Order.findByIdAndUpdate(id, {status:'Canceled'},
+    function (err) {
+if (err){
+console.log(err);
+res.redirect('/');
+}
+else{
+console.log("Updated User : ");
+res.redirect('/orderhistory');
+}
+        });
+}
+
 module.exports = {
 product_index,
 secured_endpoint,
@@ -445,4 +475,6 @@ personal_profile,
 orderhistory,
 user_edit,
 user_update,
+order_confirm,
+order_cancel,
 }

@@ -38,8 +38,8 @@
                                 <th>End Date</th>
                                 <th>Duration</th>
                                 <th>Total Price</th>
-                                <th>Comfirm</th>
-                                <th>Cancel</th>
+                                <th>Action</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <% order.forEach(function(order){ %> 
@@ -56,11 +56,45 @@
                                 <td><%=order.name%></td>
                                 <td><%=order.user%></td>
                                 
-                                <td><span class="badge badge-success"><%=order.status%></span></td>
+                                <td>
+                                    <% if(order.status == 'Confirmed') { %>
+                                    <h1 class="badge badge-success" style="background-color:green">
+                                        <%= order.status %>
+                                    </h1>
+                                <% } else if(order.status == 'Canceled') { %>
+                                    <h1 class="badge badge-danger" style="background-color:red">
+                                        <%= order.status %>
+                                    </h1>
+                            
+                                <% } 
+                                else { %><h1 class="badge badge-danger" style="background-color:orange">
+                                    <%= order.status %>
+                                </h1>
+                                    <% } 
+                                %>
+                            </td>
                                 <td><%=order.startdate%></td>
                                 <td><%=order.enddate%></td>
                                 <td><%= order.duration %></td>
                                 <td><%= order.totalaftax %></td>
+                                <td>  <% if(order.status == 'Pending') { %>
+                                    <form action="/confirm/<%= order._id %>" method="post">
+                                    <button class="btn btn-success">Confirm</button>
+                                    </form>
+                                    <% } 
+                                    else { %> 
+                                        <% } 
+                                    %>
+                    </td>
+                        <td><% if(order.status == 'Pending') { %>	
+                            <form action="/cancel/<%= order._id %>" method="post">
+                            <button class="btn btn-danger">Cancel</button>
+                            </form>
+                            <% } 
+                            else { %>
+                            <% } 
+                             %>
+            </td>
                                 <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
                             </tr>
                             <% }) %>
