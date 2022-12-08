@@ -15,9 +15,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<<div class="container mt-5">
+<<div class="container-fluid">
     <div class="d-flex justify-content-center row">
-        <div class="col-md-10">
+        <div class="col-lg-12">
             
             <div class="rounded">
                 <div class="table-responsive table-borderless">
@@ -30,6 +30,7 @@
                                     </div>
                                 </th>
                                 <th>Order #</th>
+                                <th>Image</th>
                                 <th>Product Name</th>
                                 <th>Email</th>
                                 <th>Order Status</th>
@@ -51,6 +52,7 @@
                                 </td>
                                
                                 <td><%=order._id%></td>
+                                <td><img src="<%= order.image %>" alt="" style="width: 150px;height: 150px;"></td>
                                 <td><%=order.name%></td>
                                 <td><%=order.user%></td>
                                 
