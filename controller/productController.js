@@ -120,6 +120,7 @@ const product_create_post = (req,res) =>{
         price:req.body.price,
         image:req.body.image,
         ownerimage:req.oidc.user.picture,
+        owner: req.oidc.user.email,
     }
     const product = new Product(product1);
     product.save()
@@ -157,10 +158,13 @@ const product_update = async (req, res) => {
 // Overwrite
     doc.overwrite({
         name: req.body.name,
-        image: req.body.image,
-        address: req.body.address,
-        city: req.body.city,
-        price: req.body.price
+        owner: req.oidc.user.email,
+        address:req.body.address,
+        city:req.body.city,
+        price:req.body.price,
+        image:req.body.image,
+        ownerimage:req.oidc.user.picture,
+        owner: req.oidc.user.email,
     })
 
     await doc.save()
