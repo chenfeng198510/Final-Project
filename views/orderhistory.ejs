@@ -85,16 +85,16 @@
                                     else { %> 
                                         <% } 
                                     %>
-                    </td>
-                        <td><% if(order.status == 'Pending') { %>	
-                            <form action="/cancel/<%= order._id %>" method="post">
-                            <button class="btn btn-danger">Cancel</button>
-                            </form>
-                            <% } 
-                            else { %>
-                            <% } 
-                             %>
-            </td>
+                            </td>
+                                <td><% if(order.status == 'Pending') { %>	
+                                    <form action="/cancel/<%= order._id %>" method="post">
+                                    <button class="btn btn-danger">Cancel</button>
+                                    /form>
+                                    <% } 
+                                    else { %>
+                                    <% } 
+                                     %>
+                            </td>
                                 <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
                             </tr>
                             <% }) %>
